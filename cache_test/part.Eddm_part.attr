@@ -1,0 +1,7 @@
+A 5 u Eddm_part 528bde0ea06d.03.81.69.07.59.00.6d.fe 1 2 1 0
+V v 1 1 528bde0ea06e.03.81.69.07.59.00.6d.fe
+F f 1 "part.part_1"
+O 1
+P "eddm__stream_to_use" "eddm__propl_dstream"
+R csduv 0 "/home/kza199/MGC/ece361/cache_test/schematic" 1 mgc_schematic 528bde0e5eea.03.81.69.07.59.01.6d.fe 528bde0e5eea.03.81.69.07.59.00.6d.fe
+P "eddm__refer_state" "eddm__refer_floating"
