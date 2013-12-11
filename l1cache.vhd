@@ -19,8 +19,13 @@ architecture structural of l1cache is
 	  port (
 		q       : out  std_logic_vector(63 downto 0);
 		d       : in  std_logic_vector(31 downto 0);
+<<<<<<< HEAD
 		tag     : in  std_logic_vector(26 downto 0);
 		index	: in std_logic_vector(3 downto 0);
+=======
+		tag     : in  std_logic_vector(22 downto 0);
+		index	: in std_logic_vector(6 downto 0);
+>>>>>>> 865f5f29ae0575e3577ccb270e8b8af3d842267c
 		we		: in  std_logic;
 		re		: in  std_logic -- d is ignored if are is enabled
 	  );
@@ -37,7 +42,7 @@ architecture structural of l1cache is
 	  line_gen: 
 	   for I in 0 to 15 generate
 		  line_map : l1cache64line port map
-			(cache_out, d, addr(31 downto 6), addr(5 downto 3), we_vec(I), re);
+			(cache_out, d, addr(31 downto 10), addr(9 downto 3), we_vec(I), re);
 	   end generate line_gen;
 	   
 	   -- hit/miss logic
