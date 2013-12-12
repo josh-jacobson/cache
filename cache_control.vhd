@@ -27,6 +27,9 @@ architecture structural of cache_control is
     signal address : std_logic_vector(31 downto 0); -- Global address bus
     signal write_data : std_logic_vector(31 downto 0); -- Data to be written for write operations
     
+    -- Enable signals:
+    signal L1_enable, L2_enable, memory_enable : std_logic;
+    
     signal data_word : std_logic_vector(31 downto 0); -- 4 byte bus handling the final step of a memory access
     signal data_64 : std_logic_vector(511 downto 0); -- 64 byte bus handling fetches from L2 to L1
     signal data_256 : std_logic_vector(2047 downto 0); -- 256 byte bus handling fetches from memory to L2
@@ -54,7 +57,13 @@ end component cache_test;
     
    
 begin
-    -- L1 and L2 Mappings here
+    -- L1 and L2 mappings here
+    
+    -- CSRAM with 32 bit addresses and 256 byte data bus used for main memory:
+    main_memory_map : csram generic map (32, 2048) port map (cs => memory_enable, oe => '1', we => we, index => address, din => data_256, dout => data_256);
+    
+    -- Integration with provided cache_test entity:
     cache_test_map : cache_test generic map (addr_trace_file, data_trace_file) port map (data_word, clk, ready, reset, address, write_data, we, Err);
+    
     
 end structural;
