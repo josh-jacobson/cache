@@ -43,12 +43,12 @@ signal hit_out	: std_logic_vector (22 downto 0);
 signal full_tag : std_logic_vector (23 downto 0);
 signal valid_tag : std_logic_vector (22 downto 0);
 begin
-	full_tag <= tag&dirty_bit&valid_bit;
-	valid_tag <= tag&'0';
+	full_tag <= tag&dirty_bit&valid_bit; -- composition of elements stored in the cache metadata
+	valid_tag <= tag&'1'; -- tag comparator for valid checking
 	data_processor : a16input_mux_padded port map (din, q, offset, parsed_q); -- encodes a 32-bit value given to a 256-bit signal ready to bed to the line_map
 	csram_tag_map : csram generic map (4, 24) port map ('1',re,we,index,full_tag,tag_map_out); -- tag line - stores the tag, dirty bit, and valid bit
 	csram_line_map : csram generic map (4, 256) port map ('1',re,we,index,parsed_q,q); -- data line
-    valid_check_map : or_gate_n generic map (23) port map (tag_map_out(23 downto 1), valid_tag, hit_out);
-	valid_bit_set	: or_23 port map (hit_out,hit);
+    valid_check_map : and_gate_n generic map (23) port map (tag_map_out(23 downto 1), valid_tag, hit_out); -- compares input tag with the tag in the cache to see whether or not there is a hit
+	valid_bit_set	: or_23 port map (hit_out,hit); -- compares the hit output to determine whether or not there was actually a hit
 	qin <= parsed_q;
 end architecture structural;
