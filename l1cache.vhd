@@ -18,27 +18,26 @@ architecture structural of l1cache is
 
 	component l1cache64line is
 	  port (
-		q       : out  std_logic_vector(255 downto 0);
+		q       : out  std_logic_vector(512 downto 0);
 		d       : in  std_logic_vector(31 downto 0);
-		tag     : in  std_logic_vector(26 downto 0);
-		index	: in std_logic_vector(8 downto 6);
+		tag     : in  std_logic_vector(21 downto 0);
+		index	: in std_logic_vector(9 downto 6);
 		offset  : in std_logic_vector(5 downto 2);
 		we		: in  std_logic;
-		re		: in  std_logic -- d is ignored if re is enabled
+		hit		: out std_logic;
+		re		: in  std_logic 
 	  );
 	end component l1cache64line;
-
-	signal we_vec : std_logic_vector(15 downto 0);
-	signal d		: std_logic_vector(31 downto 0);
-	signal cache_out : std_logic_vector(255 downto 0);
+	signal hit_v		: std_logic_vector(15 downto 0);
+	signal cache_out : std_logic_vector(512 downto 0);
 	begin
 
 	  line_gen: 
 	   for I in 0 to 15 generate
 		  line_map : l1cache64line port map
-			(cache_out, d, addr(31 downto 10), addr(9 downto 6), addr(5 downto 2), write, hit, re);
+			(cache_out, d, addr(31 downto 10), addr(9 downto 6), addr(5 downto 2), write, hit_v(I), '1');
 	   end generate line_gen;
 	   
-	   miss_map : not port map (hit, miss);
+	   miss_map : not_gate port map (hit_v(0), miss);
 	  
 	end architecture structural;
