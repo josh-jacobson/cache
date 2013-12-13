@@ -19,7 +19,7 @@ signal xmid1 : std_logic;
 signal xlast : std_logic;
 begin
 xop1 : or_gate_n generic map (n=>11) port map (x=>x(21 downto 11), y=>x(10 downto 0), z=>xmid11);
-xop2 : or_gate port map (x=>xmid11(10), y=>x(22), z=>x1123);
+xop12 : or_gate port map (x=>xmid11(10), y=>x(22), z=>x1123);
 xop3 : or_gate_n generic map (n=>5) port map (x=>xmid11(9 downto 5), y=>x(4 downto 0), z=>xmid5);
 xop2 : or_gate port map (x=>xmid5(4), y=>x1123, z=>xlast);
 xop4 : or_gate_n generic map (n=>2) port map (x=>xmid5(3 downto 2), y=>xmid5(1 downto 0), z=>xmid2);
