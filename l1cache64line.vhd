@@ -24,6 +24,7 @@ begin
 	-- signals have to be spliced, can't do multiple accesses
 	
 	-- manually wrote out words mapped to each
-	csram_line_map : csram generic map (4, 256) port map ('1','1',enable,index,d,q);
-  
+																					-- tag line needed
+	csram_line_map : csram generic map (4, 256) port map ('1','1',enable,index,d,q); -- data line
+    
 end architecture structural;
